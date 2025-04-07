@@ -5,6 +5,11 @@ buildscript {
         mavenLocal()
         mavenCentral()
         gradlePluginPortal()
+        maven { setUrl("https://jitpack.io") }
+
+        dependencies {
+            classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+        }
     }
 }
 
@@ -24,12 +29,14 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "signing")
     apply(plugin = "maven-publish")
+    apply(plugin = "com.github.dcendents.android-maven")
 
-    group = "com.hermes.service.spi"
+    group = "com.github.raingift"
     version = "1.0.0"
 
     repositories {
         maven { setUrl("https://maven.aliyun.com/repository/central/") }
+        maven { setUrl("https://jitpack.io") }
         google()
         mavenCentral()
         jcenter() // Warning: this repository is going to shut down soon
@@ -69,6 +76,32 @@ subprojects {
 
                 artifact(sourcesJar.get())
                 artifact(javadocJar.get())
+
+                pom.withXml {
+                    asNode().apply {
+                        appendNode("name", project.name)
+                        appendNode("url", "https://github.com/raingift/services.git")
+                        appendNode("description", project.description ?: project.name)
+                        appendNode("scm").apply {
+                            appendNode("connection", "scm:git:git@github.com:raingift/services.git")
+                            appendNode("developerConnection", "scm:git:git@github.com:raingift/services.git")
+                            appendNode("url", "https://github.com/raingift/services.git")
+                        }
+                        appendNode("licenses").apply {
+                            appendNode("license").apply {
+                                appendNode("name", "Apache License")
+                                appendNode("url", "https://www.apache.org/licenses/LICENSE-2.0")
+                            }
+                        }
+                        appendNode("developers").apply {
+                            appendNode("developer").apply {
+                                appendNode("id", "raingift")
+                                appendNode("name", "raingift")
+                                appendNode("email", "zhangtr@xiaopeng.com")
+                            }
+                        }
+                    }
+                }
             }
         }
     }
