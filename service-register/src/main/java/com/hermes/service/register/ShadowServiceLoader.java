@@ -27,10 +27,6 @@ public final class ShadowServiceLoader<S> implements Iterable<S> {
         return this.providers.iterator();
     }
 
-    public void reload() {
-        // do nothing
-    }
-
     public static <S> ShadowServiceLoader<S> load(final Class<S> service) {
         return new ShadowServiceLoader<>(service);
     }

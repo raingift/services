@@ -1,16 +1,42 @@
 plugins {
-    kotlin("jvm")
-    kotlin("kapt")
+    id("java-library")
+    id("java-gradle-plugin")
+    id("org.jetbrains.kotlin.jvm")
+    id("com.gradle.plugin-publish")
 }
 
 dependencies {
     implementation(gradleApi())
 
-    kapt("com.google.auto.service:auto-service:1.0-rc7")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.didiglobal.booster:booster-android-gradle-api:1.3.1")
-    implementation("com.didiglobal.booster:booster-task-spi:1.3.1")
-    implementation("com.didiglobal.booster:booster-transform-asm:1.3.0")
-    implementation("com.didiglobal.booster:booster-transform-util:1.3.1")
-    compileOnly("com.android.tools.build:gradle:4.2.1")
+    implementation("com.android.tools.build:gradle:8.2.2")
+    compileOnly("commons-io:commons-io:2.16.1")
+    compileOnly("commons-codec:commons-codec:1.15")
+    compileOnly("org.ow2.asm:asm-commons:9.7")
+    compileOnly("org.ow2.asm:asm-tree:9.4")
+}
+
+// The project version will be used as your plugin version when publishing.
+group = "io.github.raingitft"
+version = "1.0.0"
+
+@Suppress("UnstableApiUsage")
+gradlePlugin {
+    plugins {
+        create("ServiceLoaderPlugin") {
+            id = "io.github.raingitft.ServiceLoaderPlugin"
+            implementationClass = "com.hermes.service.loader.ServiceLoaderPlugin"
+            displayName = "ServiceLoader AGP8.2+ plugin"
+            description = "ServiceLoader AGP8.2+ plugin"
+            tags.set(
+                listOf(
+                    "ServiceLoader",
+                    "AGP8",
+                    "ServiceLoaderPlugin plugin",
+                    "AGP8",
+                    "Transform",
+                    "Auto Register"
+                )
+            )
+        }
+    }
 }

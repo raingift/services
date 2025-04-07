@@ -2,7 +2,19 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.8">
-      <module name="MyPlugin.app" target="11" />
+      <module name="services" target="17" />
+      <module name="services.service-compiler" target="17" />
+      <module name="services.service-compiler.main" target="17" />
+      <module name="services.service-compiler.test" target="17" />
+      <module name="services.service-kt-compiler" target="11" />
+      <module name="services.service-kt-compiler.main" target="11" />
+      <module name="services.service-kt-compiler.test" target="11" />
+      <module name="services.service-loader-plugin" target="17" />
+      <module name="services.service-loader-plugin.main" target="17" />
+      <module name="services.service-loader-plugin.test" target="17" />
+      <module name="services.service-register" target="17" />
+      <module name="services.service-register.main" target="17" />
+      <module name="services.service-register.test" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
