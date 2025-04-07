@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ServiceConfigurationError;
 import java.util.concurrent.Callable;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
@@ -33,7 +32,6 @@ public class ServiceRegistry {
      * @param <S>     The type of service
      * @return The instances of all implementations
      */
-    @SuppressWarnings("unchecked")
     public static <S> List<S> get(final Class<S> service) {
         final List<String> creators = sRegistry.getOrDefault(service.getName(), emptyList());
         if (creators.isEmpty()) {
@@ -58,7 +56,6 @@ public class ServiceRegistry {
      * @param <S>     The type of service
      * @return an instance of service
      */
-    @SuppressWarnings("unchecked")
     public static <S> S single(final Class<S> service) {
         final Iterator<String> i = sRegistry.getOrDefault(service.getName(), emptyList()).iterator();
         if (i.hasNext()) {
@@ -79,7 +76,6 @@ public class ServiceRegistry {
      * @param <S>        The type of service
      * @return an instance of service
      */
-    @SuppressWarnings("unchecked")
     public static <S> S single(final Class<S> service, final Comparator<String> comparator) {
         final ArrayList<String> creators = new ArrayList<>(sRegistry.getOrDefault(service.getName(), emptyList()));
         creators.sort(comparator);
@@ -108,10 +104,9 @@ public class ServiceRegistry {
             }
         }
 
-        Class<?> cls = null;
         S instance = null;
         try {
-            cls = Class.forName(creator);
+            Class<?> cls = Class.forName(creator);
             Constructor<?> constructor = cls.getConstructor();
             instance = (S) (((Callable<S>) constructor.newInstance()).call());
             entryList.add(new ImplEntry<>(creator, instance));
@@ -126,22 +121,12 @@ public class ServiceRegistry {
      * Register a creator for the specified service
      *
      * @param service The class of service.name
-     * @param impl The service impl.name
+     * @param impl    The service impl.name
      * @param <S>     The type of service
      */
     public static <S> void register(final String service, final String impl) {
-        sRegistry.computeIfAbsent(service, new Function<String, List<String>>() {
-            @Override
-            public List<String> apply(final String clazz) {
-                return new ArrayList<>();
-            }
-        }).add(impl);
-        sCache.computeIfAbsent(service, new Function<String, List<ImplEntry<?>>>() {
-            @Override
-            public List<ImplEntry<?>> apply(String s) {
-                return new ArrayList<>();
-            }
-        });
+        sRegistry.computeIfAbsent(service, clazz -> new ArrayList<>()).add(impl);
+        sCache.computeIfAbsent(service, s -> new ArrayList<>());
     }
 
 
