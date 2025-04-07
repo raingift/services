@@ -1,0 +1,5 @@
+rootProject.name = "MyPlugin"
+include ':service-register'
+include ':service-loader-plugin'
+include ':service-compiler'
+//include ':mylibrary'
