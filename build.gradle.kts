@@ -1,14 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     repositories {
-        maven { setUrl("https://maven.aliyun.com/repository/central/") }
+        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { setUrl("https://maven.aliyun.com/repository/central") }
         mavenLocal()
-        mavenCentral()
+        google()
         gradlePluginPortal()
+        mavenCentral()
         maven { setUrl("https://jitpack.io") }
 
         dependencies {
-            classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
+            classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20")
+            classpath("com.didiglobal.booster:booster-gradle-plugin:4.0.0")
+            classpath("com.android.tools.build:gradle:7.3.0")
         }
     }
 }
@@ -29,7 +33,6 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "signing")
     apply(plugin = "maven-publish")
-    apply(plugin = "com.github.dcendents.android-maven")
 
     group = "com.github.raingift"
     version = "1.0.0"
@@ -39,12 +42,6 @@ subprojects {
         maven { setUrl("https://jitpack.io") }
         google()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
-    }
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     val sourcesJar by this@subprojects.tasks.registering(Jar::class) {
