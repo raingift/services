@@ -37,16 +37,16 @@ class ServiceAnnotationProcessor : AutoServiceProcessor() {
     private val providers = mutableMapOf<String, MutableList<String>>()
 
     override fun process(annotations: MutableSet<out TypeElement>, roundEnv: RoundEnvironment): Boolean {
-        return super.process(annotations, roundEnv) && try {
+        return try {
             if (roundEnv.processingOver()) {
                 generateProviderImplInit()
             } else {
                 processAnnotations(roundEnv)
             }
-            true
+            false
         } catch (e: Exception) {
             processingEnv.fatalError(e)
-            true
+            false
         }
     }
 
